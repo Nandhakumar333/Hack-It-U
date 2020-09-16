@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Test</title>
+</head>
+<body>
+    <h2>{{message}}</h2> 
+    <form action="update" method="POST">
+        <label for="Title">Title:</label><br>
+        <input type="text" id="title" name="title" value="{{form.title}}"equired><br><br>
+        <label for="dept">Dept:</label><br>
+        <input type="text" id="dept" name="dept" value="{{form.dept}}" required><br><br>
+        <label for="duration">Duration:</label><br>
+        <input type="number" id="duration" name="duration" value="{{form.duration}}" required><br><br>
+        <label for="No.of.ques">Number Of Questions:</label><br>
+        <input type="number" id="no.of.ques" name="question" value="{{form.question}}" required><br><br>
+        <label for="marks">Marks:</label><br>
+        <input type="number" id="marks" name="marks" value="{{form.marks}}" required><br><br>
+        <input type="submit" value="Update">
+    </form>
+    <div>
+        <br>
+        <a href="/faculty/{{form.title}}/viewFiles">View files</a>
+        <br>
+    </div>
+    <div>
+    <h3>Make sure to delete all files before deleting the test!</h3>
+    <form action='/faculty/{{form.title}}/cancel' method="POST">
+        <button class="btn-primary btn mt-2" type="submit">Delete Test</button>
+    </form>
+</div>
+</body>
+</html></html>

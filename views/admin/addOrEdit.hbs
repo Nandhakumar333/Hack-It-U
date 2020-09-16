@@ -1,0 +1,105 @@
+<div class="row">
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+    <a class="navbar-brand" style="font-size: 20px;" href="home">KCT</a>
+    <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+    >
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <br /><br />
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav flex-column">
+        <li class="nav-item mt-md-2">
+            <a
+            class="nav-link"
+            style="font-size: 25px;"
+            href="student"
+            id="teacher-nav"
+            >Student</a>
+        </li>
+        <li class="nav-item mt-md-2">
+            <a
+            class="nav-link"
+            style="font-size: 25px;"
+            href="faculty"
+            id="teacher-nav"
+            >Faculty</a>
+        </li>
+        </ul>
+    </div>
+    </nav>
+</div>
+<div class="container-fluid col-sm-8" id="view">
+        <h3>{{viewTitle}}<br></h3>
+        <form action="/admin" method="POST" autocomplete="off">
+
+            <input type="hidden" name="_id" value="{{user._id}}">
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="fullName">Full Name</label>
+            </div>
+            <div class="col-md-8 row">
+                <input type="text" id="fullName" class="form-control" name="fullName" placeholder="Full Name" value="{{user.fullName}}">
+                <div class="text-danger">
+                    {{user.fullNameError}}
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="rollNo">Roll No.</label>
+            </div>
+            <div class="col-md-8 row">
+                <input type="text" class="form-control" id="rollno" name="rollno" placeholder="Roll No" value="{{user.rollno}}">
+            </div>
+
+
+            <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="dept">Department</label>
+            </div>
+            <div class="col-md-8 row">
+                <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" value="{{user.dept}}">
+            </div>
+
+
+            <div class="form-group row">
+                <label for="phone" class="col-12 col-md-2 col-form-label">Mobile No</label>
+            </div>
+            <div class="col-md-4 row">
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="Mobile Number" value="{{user.phone}}">
+            </div>
+
+
+            <div class="form-group row">
+                <label for="email" class="col-12 col-md-2 col-form-label">Email</label>
+
+                <label for="password" class="col-12 offset-md-2 col-md-2 col-form-label">Password</label>
+            </div>
+
+            <div class=" form-group row">
+                <div class="col-12 col-md-4">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{user.email}}">
+                    <div class="text-danger">{{user.emailError}}</div>
+                </div>
+                <div class="col-12 offset-md-1/2 col-md-4">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" value="{{user.password}}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-layer-group"></i>  Submit</button>
+                    <a href='/admin/cancel' class="btn btn-secondary btn-sm"><i class="far fa-list-alt"></i>    Cancel</a>
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>

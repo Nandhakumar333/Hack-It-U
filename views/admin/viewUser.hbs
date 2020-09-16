@@ -1,0 +1,89 @@
+<div class="row mt-4">
+    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/admin/home">KCT</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+            <li class="nav-item mt-md-2">
+                <a
+                class="nav-link"
+                style="font-size: 25px;"
+                href="/admin/student"
+                id="teacher-nav"
+                >Student</a>
+            </li>
+            <li class="nav-item mt-md-2">
+                <a
+                class="nav-link"
+                style="font-size: 25px;"
+                href="/admin/faculty"
+                id="teacher-nav"
+                >Faculty</a>
+            </li>
+            </ul>
+        </div>
+        </nav>
+    </div>
+    <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center">
+        <div class="row text-center">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-12">
+                <h4  id="profile-title">Profile</h4>
+            </div>
+        </div>
+        <div class="row p-4 text-center" id="table-div">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 shadow p-4 mb-4 bg-white" id="profile-box">
+            <div class="row">
+                <div class="col-xl-1 col-lg-1 col-md-1 col-sm-2 col-12 text-center">
+                    <img class="rounded-circle mt-lg-4" alt="110x110" src="https://mdbootstrap.com/img/Photos/Avatars/img%20(31).jpg"
+                    width="110" height="110" data-holder-rendered="true">
+                </div>
+                <div class="col-xl-11 col-lg-11 col-md-11 col-sm-10 col-12">
+                    <div class="row mt-4">
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+                            <h4 id="profile-content">{{user.fullName}}</h4>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12"><h4 id="profile-content">{{user.dept}}</h4></div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-xl-4 mt-lg-4 mt-md-4 mt-sm-4"><h4 id="profile-content">XXXXX</h4></div>
+                        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 mt-xl-4 mt-lg-4 mt-md-4 mt-sm-4"><h4 id="profile-content">YYYY</h4></div>
+                    </div>
+                </div> 
+            </div>
+            </div>
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mt-2">
+            <div class="row p-4 text-center shadow p-4 mb-4 bg-white" id="details-box">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <h3>Details</h3>
+                </div>
+                <div class="col-xl-11 col-lg-11 col-md-11 col-sm-10 col-12">
+                    <div class="row ml-lg-4">
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6">
+                            <h5 id="profile-details">Name</h5>
+                        </div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6"><h5 id="profile-details">{{user.fullName}}</h5></div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6"><h5 id="profile-details">Department</h5></div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6"><h5 id="profile-details">{{user.dept}}</h5></div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6"><h5 id="profile-details">Roll No</h5></div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6"><h5 id="profile-details">{{user.rollno}}</h5></div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6"><h5 id="profile-details">Email</h5></div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6"><h5 id="profile-details">{{user.email}}</h5></div>
+                        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6"><h5 id="profile-details">Phone</h5></div>
+                        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6"><h5 id="profile-details">{{user.phone}}</h5></div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

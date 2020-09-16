@@ -1,0 +1,85 @@
+  <div class="row">
+    <div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+        <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="home">KCT</a>
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+            <li class="nav-item mt-md-2">
+                <a
+                class="nav-link"
+                style="font-size: 25px;"
+                href="student"
+                id="teacher-nav"
+                >Student</a>
+            </li>
+            <li class="nav-item mt-md-2">
+                <a
+                class="nav-link"
+                style="font-size: 25px;"
+                href="faculty"
+                id="teacher-nav"
+                >Faculty</a>
+            </li>
+            </ul>
+        </div>
+        </nav>
+    </div>
+
+
+    <div class="col-sm-9 border">
+      <div class="row">
+        <div class="offset-sm-3 col-sm-6">
+          <span class="badge badge-lg badge-pill badge-danger">LIVE</span></br></br>
+        </div>
+      </div>
+
+      <div class="row">
+        {{#each tests}}
+            <div class="col-sm-4">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td rowspan="2"><p>{{this.title}}</p></td>
+                  <td><p>Duration:<br>{{this.duration}}</p>
+                </tr>
+                <tr>
+                  <td><p>No. Of Questions:<br>{{this.question}}</p></td>
+                </tr>
+                <tr>
+                </tr>
+
+                <tr>
+                  <td rowspan="2"><p>No. of Submissions</p></td>
+                  <td>
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        Close <i class="fa fa-chevron-right"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="submit" class="btn btn-outline-primary btn-sm">
+                        Edit <i class="fa fa-chevron-right"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+
+  </div>

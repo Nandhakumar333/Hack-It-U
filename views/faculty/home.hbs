@@ -1,0 +1,110 @@
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/faculty">Home</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item"
+                    id="Test-nav">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        id="teacher-nav"
+                        href="#">Test Results</a>
+                </li>
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/profile"
+                        id="teacher-nav"
+                        >Profile</a>
+                </li>
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/createTest"
+                        id="teacher-nav"
+                        >Create Test</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<div class=" container-fluid col-sm-9" id="view">
+    <div class="container-fluid"id="View_Live">
+        <h3 class="row"><span class="offset-sm-5 badge badge-success" style="padding:8px 8px 8px 8px">RESULTS</span></h3>
+        <div id="view_results">
+            <div class="row">
+                {{#each testC}}
+                <div class=" table-responsive table-responsive-sm col-12 col-sm-5">
+                    <table class="table table-sm text-center" style="width:400px;">
+                        <tbody>
+                            <tr>
+                                <td>{{this.title}}</td>
+                                <td>III</td>
+                                
+                                <td rowspan="2" style="padding:25px 25px 25px 25px">
+                                    <button type="submit" class="btn btn-outline-success btn-sm">
+                                        Check <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>09/12/2020</td>
+                                <td>{{this.dept}}</td>
+                                
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <br><br>
+    <div class="container-fluid"id="Live">
+        <h3 class="row"><span class="offset-sm-5 badge badge-primary">LIVE</span></h3>
+        <div id="view_results">
+            <div class="row">
+                {{#each test}}
+                <div class="table-responsive table-responsive-sm col-12 col-sm-5">
+                    <table class="table table-sm text-center" style="width:400px;">
+                        <tbody>
+                            <tr>
+                                <td colspan="4">{{this.title}}  20/09/20  12:00 </td>
+                            </tr>
+                            <tr>
+                                <td>Dept</td>
+                                <td>Marks</td>
+                                <td>Questions</td>
+                                <td rowspan="2" style="padding: 25px 25px 25px 25px">
+                                    <button type="submit" class="btn btn-outline-primary btn-sm" onclick="window.location.href='/faculty/{{this.title}}/view'">
+                                        Check <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{this.dept}}</td>
+                                <td>{{this.marks}}</td>
+                                <td>{{this.question}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                </div>
+            {{/each}}
+            </div>
+        </div>
+    </div>
+
+</div>

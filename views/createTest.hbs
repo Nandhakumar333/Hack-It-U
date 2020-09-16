@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Test</title>
+</head>
+<body>
+    <form action="create" method="POST">
+        <label for="Title">Title:</label><br>
+        <input type="text" id="title" name="title" value="{{form.title}}"equired><br><br>
+        <label for="dept">Department:</label><br>
+        <input type="text" id="dept" name="dept" value="{{user.dept}}" required><br><br>
+        <label for="duration">Duration:</label><br>
+        <input type="number" id="duration" name="duration" value="{{form.duration}}" required><br><br>
+        <label for="No.of.ques">Number Of Questions:</label><br>
+        <input type="number" id="no.of.ques" name="question" value="{{form.question}}" required><br><br>
+        <label for="marks">Marks:</label><br>
+        <input type="number" id="marks" name="marks" value="{{form.marks}}" required><br><br>
+        <input type="submit" value="Next">
+    </form>
+</body>
+</html></html>

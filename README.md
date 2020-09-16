@@ -1,2 +1,3 @@
-# Hack-It-U
-Update On Test Taken Check and Student Home Page Update
+# HackIt
+## Before running the project, Run this command:
+npm i

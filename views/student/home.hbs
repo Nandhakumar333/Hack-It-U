@@ -1,0 +1,95 @@
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/student">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link" style="font-size: 23px;" href="/student/profile" id="teacher-nav">Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center">
+    <div class="row text-center mt-2">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-12">
+            <h4 id="profile-title">Tests</h4>
+        </div>
+    </div>
+    <div class="row p-4 text-center" id="table-div">
+        <div class="row">
+            {{#each test}}
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{this.title}}</h5>
+                        <div class="row">
+                            <table class="table table-bordered table-responsive-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Section</th>
+                                        <th>Title</th>
+                                        <th>Questions</th>
+                                        <th>Mark</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>Coding Question</td>
+                                        <td>
+                                            {{this.question}}
+                                        </td>
+                                        <td>{{this.marks}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="bg-primary" colspan="3">Total</td>
+                                        <td class="bg-primary">{{this.marks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <a href="/student/{{this.title}}?page=1" id="Take" class="btn btn-outline-success">Take Test</a>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>
+
+<script>
+    let val = localStorage.getItem("User");
+    /*var cookieArr = document.cookie.split(";");
+    cookieArr.forEach((item) => {
+        console.log(item.split("="));
+        console.log(item.split("=")[1].split(",")[0].split(":")[1]);
+    })*/
+    if (val) {
+        let data = JSON.parse(val);
+        if (data.Taken) {
+            console.log("Already Taken");
+            document.querySelector("#Take").removeAttribute("href");
+        } else {
+            console.log("Not Taken");
+        }
+    } else {
+        console.log("Not Taken");
+    }
+    document.querySelector("#Take").addEventListener("click", taken);
+    function taken() {
+
+        var obj = {
+            user: "Nandha",
+            Taken: "true",
+        };
+        document.cookie = `User=${JSON.stringify(obj)}; max - age=1000`;
+        localStorage.setItem("User", JSON.stringify(obj));
+    }
+</script>

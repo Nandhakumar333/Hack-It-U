@@ -1,0 +1,114 @@
+﻿﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Register</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./css/register.css">
+</head>
+<body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <h2 class="navbar-brand" style="font-size: 30px;">KCT</h2>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </nav>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <div class="row row-content">
+        <div class="offset-md-2 col-8">
+            <h3>Enter the details:<br></h3>
+        </div>
+        <div class=" offset-md-2 col-12 col-md-9">
+            <form action="/registerUser" method="POST" autocomplete="off">
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="fullName">Full Name</label>
+                </div>
+                <div class="col-md-8 row">
+                    <input type="text" id="name" name="fullName" class="form-control" placeholder="Full Name" required>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="rollno">Roll No.</label>
+                </div>
+                <div class="col-md-8 row">
+                    <input type="text" class="form-control" id="rollno" name="rollno" placeholder="Roll Number" required>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="dept">Department</label>
+                </div>
+                <div class="col-md-8 row">
+                    <input type="text" class="form-control" id="dept" name="dept" placeholder="Department" required>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="phone" class="col-12 col-md-2 col-form-label">Mobile No</label>
+                </div>
+                <div class="col-md-4 row">
+                    <input id="phone" name="phone" type="tel" class="form-control" placeholder="Your Mobile Number" required>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="email" class="col-12 col-md-2 col-form-label">Email</label>
+
+                    <label for="password" class="col-12 offset-md-2 col-md-2 col-form-label">Password</label>
+                </div>
+
+                <div class=" form-group row">
+                    <div class="col-12 col-md-4">
+                        <input type="email" name="email" id="email" class=" form-control" placeholder="Email" required>
+                    </div>
+                    <div class="col-12 offset-md-1/2 col-md-4">
+                        <input type="password" name="password" id="password" class=" form-control" placeholder="password" required>
+                    </div>
+                </div>
+
+            
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-layer-group"></i>  Submit</button>
+                        <a href='/' class="btn btn-secondary btn-sm"><i class="far fa-list-alt"></i>    Cancel</a>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+        <div class="col-12 col-md">
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS. -->
+    <script src="https://kit.fontawesome.com/4927a8ecf0.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</body>
+
+</html>

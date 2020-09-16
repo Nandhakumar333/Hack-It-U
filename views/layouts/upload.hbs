@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css">
+</head>
+<body>
+    <div class="container">
+        <h1>{{message}}</h1>
+        {{{body}}}
+        <div class="col-md-6 offset-md-3 border p-3 mt-5">
+            <form class="test-form" method="POST" action="/faculty/uploadTest/upload" enctype="multipart/form-data">
+                <div class="input-group mt-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Choose File</span>
+                    </div>
+                    <input type="file" id="file1" name="file1" class="form-control">
+                </div>
+                <button class="btn-primary btn mt-3" type="submit">Upload File</button>
+            </form>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <h3>Uploaded Files</h3>
+                {{#each files}}
+                <hr>
+                    <form action="/faculty/del/{{this._id}}" method="POST">
+                    {{this.filename}}    <button class="btn-primary btn mt-3" type="submit">Delete</button>
+                    <button class="btn-primary btn mt-3" type="button" onclick="window.location.href='/faculty/view/{{this.filename}}'">Test Cases</button>
+                    </form>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+</html>
