@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>{{title}}</title>
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./css/style11.css" type="text/css" />
     <link rel="stylesheet" href="./css/style22.css" type="text/css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <script src="./js/js11.js"></script>
+    <script src="../js/disable.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
         .split {
@@ -57,45 +52,45 @@
         }
     </style>
 </head>
+
 <body>
     <div class="col-sm-10 col-md-10 col-lg-10 col-xl-10 text-center">
         <div class="row text-center">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-12">
-            <h4  id="profile-title">{{title}}</h4>
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-12">
+                <h4 id="profile-title">{{title}}</h4>
+            </div>
         </div>
-        </div>
-        <div class="row p-4 text-center" id="table-div">
+        {{!-- <div class="row p-4 text-center" id="table-div">
             <div class="col-12">
-            <h3 class="float-xl-right float-lg-right float-md-right" id="clock"></h3>
+            
             </div>
             
-        </div>
+        </div> --}}
     </div>
     <div class="split left">
-        <iframe src="{{fileurl}}" frameborder="0" scrolling="yes"                           
-            style="overflow: hidden; height: 100%;" height="100%" width="100%"
-            align="left">
-        </iframe> 
+        <iframe src="{{fileurl}}#toolbar=0" frameborder="0" scrolling="yes" style="overflow: hidden; height: 100%;"
+            height="100%" width="100%" align="left">
+        </iframe>
     </div>
     <div class="split right">
         <form method="post" action="/student/compile" id="myForm" name="myForm">
             <div class="form-field">
-            <label for="codeSelection" style="color:blue;font-size: 20px;">Select Language</label>
-            <select name="language" id="language" class="input">
-                <option value="Java">Java</option>
-                <option value="Python">Python</option>
-                <option value="C">C</option>
-                <option value="C++">C++</option>
-            </select>
+                <label for="codeSelection" style="color:blue;font-size: 20px;">Select Language</label>
+                <select name="language" id="language" class="input">
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                    <option value="C">C</option>
+                    <option value="C++">C++</option>
+                </select>
 
-            <label for="codeArea" style="color:blue;font-size: 20px;">Code</label>
-            <textarea class="input" id="codeArea" name="codeArea" rows="14" cols="30" autofocus
-                onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
+                <label for="codeArea" style="color:blue;font-size: 20px;">Code</label>
+                <textarea class="input" id="codeArea" name="codeArea" rows="14" cols="30" autofocus
+                    onkeydown="if(event.keyCode===9){var v=this.value,s=this.selectionStart,e=this.selectionEnd;this.value=v.substring(0, s)+'\t'+v.substring(e);this.selectionStart=this.selectionEnd=s+1;return false;}"></textarea>
 
-            <label for="input" style="color:blue;font-size: 20px;">Inputs</label>
-            <textarea class="input" id="inputArea" name="inputArea" rows="4" cols="30"
-                style="font-weight:bolder;font-size:20px;color:black;border:1px solid black;"
-                placeholder="Input must be separated by Line"></textarea>
+                <label for="input" style="color:blue;font-size: 20px;">Inputs</label>
+                <textarea class="input" id="inputArea" name="inputArea" rows="4" cols="30"
+                    style="font-weight:bolder;font-size:20px;color:black;border:1px solid black;"
+                    placeholder="Input must be separated by Line"></textarea>
             </div>
             <div class="form-actions">
                 <button class="btn" type="button" name="compile" id="compile">Compile</button>
@@ -107,63 +102,108 @@
     <div class="topnav">
         <a href="/student/{{title}}?page={{math pages '-' 1}}">Prev</a>
         <a href="/student/{{title}}?page={{math pages '+' 1}}">Next</a>
+        <h3 class="float-xl-right float-lg-right float-md-right" id="clock"></h3>
     </div>
-    <script
-    src="https://code.jquery.com/jquery-2.0.3.min.js"
-    integrity="sha256-sTy1mJ4I/LAjFCCdEB4RAvPSmRCb3CU7YqodohyeOLo="
-    crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.0.3.min.js"
+        integrity="sha256-sTy1mJ4I/LAjFCCdEB4RAvPSmRCb3CU7YqodohyeOLo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
     <script src="./js/ajax.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script>
         window.onload = prepareTheme('Java Program');
         var editor;
         function prepareTheme(defaultCodeText) {
             editor = CodeMirror.fromTextArea(document.getElementById("codeArea"),
                 {
-                lineNumbers: true,
-                styleActiveLine: true,
-                matchBrackets: true
+                    lineNumbers: true,
+                    styleActiveLine: true,
+                    matchBrackets: true
                 });
             var theme = "blackboard";
             editor.setOption("theme", theme);
         }
     </script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
     <script>
-        let time=localStorage.getItem("Time");
+        let time = localStorage.getItem("Time");
         let newtime = 10000 * time;
         console.log(newtime);
         let min = time;
-        let fulltime = 2*60;
-        const display=document.getElementById('clock');
 
-        var control = setInterval(updatetime, 1000);
-        //console.log(controltime);
+        var decodedJson = decodeURIComponent("{{{dur}}}");
+        var minutes = JSON.parse(decodedJson);
+        let fulltime = 60 * minutes;
+        const display = document.getElementById('clock');
+        //var control = setInterval(updatetime, 1000);
 
-        function updatetime(){
-          let minutes = Math.floor(fulltime / 60);
-          let second = fulltime % 60;
-          if(second === 0){
-            if(minutes===0){
-                clearInterval(control);
-                window.location.href="/student";
+        let c = 0;
+        let _poller = null;
+
+        const poll = () => {
+            const interval = 1000;
+            return {
+                start: () => {
+                    _poller = setInterval(updatetime, interval);
+                },
+                stop: () => {
+                    console.log('Test paused.');
+                    console.log(_poller);
+                    clearInterval(_poller);
+                    c++;
+                    console.log(c);
+                    alert("Tap Switching = " + c);
+                    if (c === 2) {
+                        let alert = document.createElement("div");
+                        alert.className = "alert alert-danger";
+                        alert.id = 'alert'
+                        alert.innerHTML = "Test Closed";
+                        document.body.insertBefore(alert, document.body.firstChild);
+                        let alerttime = setTimeout(redirect, 3000);
+                        c = 0;
+
+                    }
+                }
+            };
+        };
+        function redirect() {
+            window.location.href = "/student";
+        }
+
+        const poller = poll();
+        poller.start();
+
+        const onVisibilityChange = () => {
+            if (document.visibilityState === 'hidden') {
+                poller.stop();
+            } else {
+                poller.start();
             }
-          }
+        };
 
-          second = second < 10? "0" + second : second;
-          minutes = minutes < 10? "0" + minutes : minutes;
-          minutes < 05? display.style.color="red": display.style.color="green";
-          display.innerHTML= `${minutes}: ${second}`
-          fulltime--;
+        document.addEventListener('visibilitychange', onVisibilityChange, false);
+
+        //console.log(controltime);
+        function updatetime() {
+            let minutes = Math.floor(fulltime / 60);
+            let second = fulltime % 60;
+            if (second === 0) {
+                if (minutes === 0) {
+                    clearInterval(control);
+                    change();
+                    window.location.href = "/student";
+                }
+            }
+            second = second < 10 ? "0" + second : second;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            minutes < 05 ? display.style.color = "red" : display.style.color = "green";
+            display.innerHTML = `${minutes}: ${second}`
+            fulltime--;
         }
     </script>
 </body>
+
 </html>

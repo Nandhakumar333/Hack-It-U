@@ -10,6 +10,7 @@ const app = require('../routes/uploads');
 const test = mongoose.model('Testdetail');
 const testcase = mongoose.model('Testcase');
 const { data } = require('jquery');
+const { ObjectId } = require('mongodb');
 
 const url = "mongodb+srv://mongo:mongo@cluster0-4zn27.mongodb.net/test?retryWrites=true&w=majority";
 const dbName = "test";
@@ -55,7 +56,7 @@ module.exports.loadHome = (req, res) => {
   Title = req.params.title;
   console.log(Title);
 
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
     if(err){
         return res.render('tests/testCreate.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: 'upload.hbs'});
     }
@@ -91,7 +92,7 @@ module.exports.uploadFile = async (req, res) => {
     if(err){
       return res.render('tests/testCreate.hbs', {title: Title, message: 'File could not be uploaded', error: err, layout: 'upload.hbs'});
     }
-    MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+    MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
       if(err){
           return res.render('tests/testCreate.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: 'upload.hbs'});
       }
@@ -101,7 +102,7 @@ module.exports.uploadFile = async (req, res) => {
 };
 
 module.exports.testAvail = async (req, res, next) => {
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
 
     if(err){
         return res.render('tests/staffTest.hbs',{title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
@@ -116,7 +117,7 @@ module.exports.testAvail = async (req, res, next) => {
 
 module.exports.viewTest = (req, res) => {
   Title = req.params.title;
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
     if(err){
         return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
     }
@@ -147,7 +148,7 @@ module.exports.viewTest = (req, res) => {
 };
 
 module.exports.delete = (req, res) => {
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
     if(err){
       return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
     }
@@ -162,7 +163,7 @@ module.exports.delete = (req, res) => {
 };
 
 module.exports.testcase = (req, res) => {
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
 
     if(err){
         return res.render('layouts/upload.hbs', {title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
@@ -173,7 +174,9 @@ module.exports.testcase = (req, res) => {
     const collectionChunks = db.collection('uploads.chunks');
 
     try {
-      collection.find({filename: req.params.filename}).toArray(function(err, docs){
+      let id = new ObjectId(req.params._id);
+      req.app.set('q_id', req.params._id)
+      collection.find({'_id': id}).toArray(function(err, docs){
         if(err){
           return res.render('tests/testCase.hbs', {title: 'File error', message: 'Error finding file', error: err.errMsg, layout: false});
         }
@@ -200,7 +203,7 @@ module.exports.testcase = (req, res) => {
               let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
               
               testcase.find({questionid: docs[0]._id}).exec((err, tests) => {
-                res.render('tests/testCase.hbs', {fileurl: finalFile, testcase: tests, qid: docs[0]._id, layout: false});
+                res.render('tests/testCase.hbs', {fileurl: finalFile, testcase: tests, layout: false});
               });
           });
         } 

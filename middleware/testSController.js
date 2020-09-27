@@ -31,18 +31,17 @@ storage.on('connection', (db) => {
 });
 
 module.exports.paginatedResults = async (req, res, next) => {
-  var output = "";
-  let Title;
-  let questions;
+  let Title = req.params.title;
+  let questions, timer;
   test.findOne({'title': `${req.params.title}`}).exec((err, docs) => {
-    Title = docs.title;
     questions = docs.question;
+    timer = docs.duration;
   });
-
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
 
   if(err){
-      return res.render('test.hbs', {title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
+      return res.render('test.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
   }
   const db = client.db(dbName);
   
@@ -54,6 +53,7 @@ module.exports.paginatedResults = async (req, res, next) => {
 
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
+  req.app.set('Title', Title);
 
   if(page !== req.app.get('curpage')) {
     req.app.set('passed', 0);
@@ -67,32 +67,32 @@ module.exports.paginatedResults = async (req, res, next) => {
   try {
     collection.find({'filename': {$regex: `^${Title}_Q`}}).limit(limit).skip(startIndex).toArray(function(err, docs){
       if(err){
-        return res.render('test.hbs', {title: 'File error', message: 'Error finding file', error: err.errMsg, layout: false});
+        return res.render('test.hbs', {title: Title, message: 'Error finding file', error: err.errMsg, layout: false});
       }
       if(!docs || docs.length === 0){
-        return res.render('test.hbs', {title: 'Download Error', message: 'No file found', layout: false});
+        return res.render('test.hbs', {title: Title, message: 'No file found', layout: false});
       }else{
       //Retrieving the chunks from the db
         collectionChunks.find({files_id : docs[0]._id}).sort({n: 1}).toArray(function(err, chunks){
-            if(err){
-            return res.render('test.hbs', {title: 'Download Error', message: 'Error retrieving chunks', error: err.errmsg, layout: false});
-            }
-            if(!chunks || chunks.length === 0){
+          if(err){
+            return res.render('test.hbs', {title: Title, message: 'Error retrieving chunks', error: err.errmsg, layout: false});
+          }
+          if(!chunks || chunks.length === 0){
             //No data found
-            return res.render('test.hbs', {title: 'Download Error', message: 'No data found', layout: false});
-            }
-            //Append Chunks
-            let fileData = [];
-            for(let i=0; i<chunks.length;i++){
+            return res.render('test.hbs', {title: Title, message: 'No data found', layout: false});
+          }
+          //Append Chunks
+          let fileData = [];
+          for(let i=0; i<chunks.length;i++){
             //This is in Binary JSON or BSON format, which is stored
             //in fileData array in base64 endocoded string format
             fileData.push(chunks[i].data.toString('base64'));
-            }
-            //Display the chunks using the data URI format
-            let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
-            req.app.set('qid', docs[0]._id);
-            req.app.set('curpage', page);
-            res.render('test.hbs', {title: Title, fileurl: finalFile, pages: page, layout: false});
+          }
+          //Display the chunks using the data URI format
+          let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
+          req.app.set('qid', docs[0]._id);
+          req.app.set('curpage', page);
+          res.render('test.hbs', {title: Title, fileurl: finalFile, pages: page, dur: encodeURIComponent(JSON.stringify(timer)), layout: false});
         });
       } 
     });
@@ -103,7 +103,7 @@ module.exports.paginatedResults = async (req, res, next) => {
 };
 
 module.exports.testAvail = async (req, res, next) => {
-  MongoClient.connect(url, {useUnifiedTopology: true}, function(err, client){
+  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
 
     if(err){
         return res.render('tests/studentTest.hbs', {title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});

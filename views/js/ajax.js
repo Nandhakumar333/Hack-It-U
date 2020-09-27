@@ -1,8 +1,6 @@
 $(document).ready(function() {
     $('#myForm').on('submit', function(e) {
         var formdata = $('#myForm').serializeArray();
-        /* var editor = document.getElementById("codeArea").value;
-        formdata.push({'name': 'codeArea', 'value': editor}); */
         console.log(formdata);
         e.preventDefault();
         $.ajax({
@@ -11,9 +9,7 @@ $(document).ready(function() {
             url: '/student/compile',
             data: formdata
         }).done(function(data) {
-            $.each(data, function(i, field){
-                $("#main").append(field + " ");
-            });
+            $("#main").html("Test Cases Passed: " + data.pass);
         })
     })
 });
@@ -21,16 +17,21 @@ $(document).ready(function() {
 $(document).ready(function() {
     $('#compile').on('click', function(e) {
         var formdata = $('#myForm').serializeArray();
-        /* var editor = document.getElementById("codeArea").value;
-        formdata.push({'name': 'codeArea', 'value': editor}); */
+        e.preventDefault();
         $.ajax({
             type: 'post',
             dataType: 'json',
             url: '/student/check',
-            data: formdata
-        }).done(function(data) {
-            console.log(data);
-            createDiv(data.obt, data.exp);
+            data: formdata,
+            success: function(data) {
+                console.log(data);
+                createDiv(data.obt, data.exp);
+                alert('Success!')
+            },
+            error: function(jqXHR, textStatus, err) {
+                //show error message
+                alert('text status '+textStatus+', err '+err)
+            }
         })
     })
 })

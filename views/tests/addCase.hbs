@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Case</title>
+</head>
+<body>
+    <form action="/faculty/addCase" method="POST">
+        <input type="hidden" name="_id">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="name">Question Id:</label><br>
+        <input type="text" id="questionid" name="questionid" value="{{qid}}" required readonly><br><br>
+        <label for="sample">Sample Case?</label>
+        <select name="sample" id="sample">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select><br>
+        <label for="input">Input:</label><br>
+        <textarea id="input" name="input" rows="4" cols="50"></textarea><br><br>
+        <label for="input">Expected output:</label><br>
+        <textarea id="expected" name="expected" rows="4" cols="50"></textarea><br><br>
+        <label for="score">Score:</label><br>
+        <input type="number" id="score" name="score" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

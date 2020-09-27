@@ -29,7 +29,7 @@
                 <hr>
                     <form action="/faculty/del/{{this._id}}" method="POST">
                     {{this.filename}}    <button class="btn-primary btn mt-3" type="submit">Delete</button>
-                    <button class="btn-primary btn mt-3" type="button" onclick="window.location.href='/faculty/view/{{this.filename}}'">Test Cases</button>
+                    <button class="btn-primary btn mt-3" type="button" onclick="window.location.href='/faculty/view/{{this._id}}'">Test Cases</button>
                     </form>
                 {{/each}}
             </div>

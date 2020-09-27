@@ -39,7 +39,7 @@
     </nav>
 </div>
 
-<div class=" container-fluid col-sm-9" id="view">
+<div class="container-fluid col-sm-9" id="view">
     <div class="container-fluid"id="View_Live">
         <h3 class="row"><span class="offset-sm-5 badge badge-success" style="padding:8px 8px 8px 8px">RESULTS</span></h3>
         <div id="view_results">
@@ -53,7 +53,7 @@
                                 <td>III</td>
                                 
                                 <td rowspan="2" style="padding:25px 25px 25px 25px">
-                                    <button type="submit" class="btn btn-outline-success btn-sm">
+                                    <button type="submit" class="btn btn-outline-success btn-sm" onclick="window.location.href='{{this.title}}/viewResults'">
                                         Check <i class="fa fa-chevron-right"></i>
                                     </button>
                                 </td>
@@ -61,7 +61,6 @@
                             <tr>
                                 <td>09/12/2020</td>
                                 <td>{{this.dept}}</td>
-                                
                             </tr>
                         </tbody>
                     </table>
@@ -90,6 +89,9 @@
                                 <td rowspan="2" style="padding: 25px 25px 25px 25px">
                                     <button type="submit" class="btn btn-outline-primary btn-sm" onclick="window.location.href='/faculty/{{this.title}}/view'">
                                         Check <i class="fa fa-chevron-right"></i>
+                                    </button><br><br>
+                                    <button type="submit" class="btn btn-outline-primary btn-sm" onclick="window.location.href='/faculty/{{this.title}}/close'">
+                                        Close <i class="fa fa-chevron-right"></i>
                                     </button>
                                 </td>
                             </tr>

@@ -29,7 +29,7 @@ router.get('/', ensureAuthenticated, (req, res) => {
 router.post('/', (req, res) => {
     if (req.body._id == '')
         insertRecord(req, res);
-        else
+    else
         updateRecord(req, res);
 });
 

@@ -6,25 +6,19 @@
     <title>Add Test Case</title>
 </head>
 <body>
-    <iframe src="{{fileurl}}" frameborder="0" width="75%" height="75%"></iframe>
-    <div>
+    <div style="left: 0; height: 80%; width: 50%; top: 10%; padding-top: 20px; z-index: 1; overflow-x: hidden;">
+        <iframe src="{{fileurl}}#toolbar=0" frameborder="0" scrolling="yes"                           
+            style="overflow: hidden; height: 100%;" height="100%" width="100%"
+            align="left"></iframe>
+    </div>
+    <div style="right: 0; height: 80%; width: 50%; top: 10%; padding-top: 20px; z-index: 1; overflow-x: hidden;">
         {{#each testcase}}
         <h3>{{this.name}}</h3>
+        <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/viewCase/{{this._id}}'">View</button>
         <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/delCase/{{this._id}}'">Delete</button>
         {{/each}}
+        <br><br>
+        <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/newCase'">Add New Test Case</button>
     </div>
-    <form action="/faculty/addCase" method="POST">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="name">Question Id:</label><br>
-        <input type="text" id="questionid" name="questionid" required value="{{qid}}" readonly><br><br>
-        <label for="input">Input:</label><br>
-        <textarea id="input" name="input" rows="4" cols="50"></textarea><br><br>
-        <label for="input">Expected output:</label><br>
-        <textarea id="expected" name="expected" rows="4" cols="50"></textarea><br><br>
-        <label for="score">Score:</label><br>
-        <input type="number" id="score" name="score" required><br><br>
-        <input type="submit" value="Create">
-    </form>
 </body>
 </html>

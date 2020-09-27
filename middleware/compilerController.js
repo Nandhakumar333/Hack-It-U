@@ -8,12 +8,13 @@ const testcase = mongoose.model('Testcase');
 
 module.exports = {
     compiler: (req, res, next) => {
-        testcase.find({questionid: req.app.get('qid')}).exec(async (err, testcases) => {
-            console.log(testcases);
+        testcase.find({questionid: req.app.get('qid'), sample: 'false'}).exec(async (err, testcases) => {
             let selected_language = req.body.language;
             let total = 0;
             let passed = 0;
-            
+            req.app.set('language', selected_language);
+            req.app.set('code', req.body.codeArea);
+
             if (selected_language === "Java") {
                 let javaCode = req.body.codeArea;
                 
@@ -111,7 +112,7 @@ module.exports = {
 };
 
 module.exports.check = (req, res) => {
-    testcase.find({questionid: req.app.get('qid')}).exec(async (err, testcases) => {
+    testcase.find({questionid: req.app.get('qid'), sample: 'true'}).exec(async (err, testcases) => {
         console.log(testcases);
         let selected_language = req.body.language;
         let passed = 0, i = 0;
@@ -128,8 +129,8 @@ module.exports.check = (req, res) => {
 
             for(let doc of testcases) {
                 await java.runFile('Main.java', {compilationPath: 'javac', executionPath: 'java', stdin: doc.input,}, (err, result) => {
-                    let out = (result['stdout']).replace(/[\r|\n|\r\n]$/, '');
-                    let expec = (doc.expected).replace(/[\r|\n|\r\n]$/, '');
+                    var out = (result['stdout']).replace(/(?:\\[rn]|[\r\n]+)$/, '');
+                    var expec = (doc.expected).replace(/(?:\\[rn]|[\r\n]+)$/, '');
                     if(out == expec) {
                         passed++;
                     }
@@ -144,16 +145,17 @@ module.exports.check = (req, res) => {
 
         else if (selected_language === "Python") {
             const sourcecode = req.body.codeArea;
-
+            console.log(sourcecode);
             fs.writeFile('Main.py', sourcecode, function (err) {
                 if (err) throw err;
                 console.log('Saved!');
             });
-            
             for(let doc of testcases) {
                 await python.runFile('Main.py', { stdin: doc.input}, (err, result) => { 
+                    console.log("Success");
                     var out = (result['stdout']).replace(/(?:\\[rn]|[\r\n]+)$/, '');
                     var expec = (doc.expected).replace(/(?:\\[rn]|[\r\n]+)$/, '');
+                    console.log("Success");
                     if(out == expec) {
                         passed++;
                     }

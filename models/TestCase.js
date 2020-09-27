@@ -10,6 +10,10 @@ var testSchema = new mongoose.Schema({
         type: String,
         required: 'This field is required'
     },
+    sample: {
+        type: String,
+        default: 'false'
+    },
     input: {
         type: String,
     },

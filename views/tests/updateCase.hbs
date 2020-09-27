@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{tCase.name}}</title>
+</head>
+<body onload='document.getElementById("sample").checked = {{tCase.sample}};'>
+    <form action="/faculty/updateCase" method="POST">
+        <input type="hidden" name="_id" value="{{tCase._id}}">
+        <label for="name">Name:</label><br>
+        <input type="text" id="name" name="name" value="{{tCase.name}}" required><br><br>
+        <label for="name">Question Id:</label><br>
+        <input type="text" id="questionid" name="questionid" required value="{{tCase.questionid}}" readonly><br><br>
+        <label for="sample">Sample Case?</label><br>
+        <input type="radio" id="sample" name="sample" value="true" checked="{{tCase.sample}}">
+        <label for="sample">Yes</label><br>
+        <input type="radio" id="sample" name="sample" value="false" checked="{{tCase.sample}}">
+        <label for="sample">No</label><br><br>
+        <label for="input">Input:</label><br>
+        <textarea id="input" name="input" rows="4" cols="50">{{tCase.input}}</textarea><br><br>
+        <label for="input">Expected output:</label><br>
+        <textarea id="expected" name="expected" rows="4" cols="50">{{tCase.expected}}</textarea><br><br>
+        <label for="score">Score:</label><br>
+        <input type="number" id="score" name="score" value="{{tCase.score}}" required><br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

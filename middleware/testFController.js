@@ -33,7 +33,7 @@ module.exports.delete = (req, res) => {
 module.exports.view = (req, res) => {
     test.findOne({'title': req.params.title}, (err, test) =>{
         if (!err) {
-            res.render('testView.hbs', {message: req.flash('message'),form: test, layout: false});
+            res.render('faculty/testView.hbs', {message: req.flash('message'), username: req.user.fullName, title: test.title, form: test, layout: 'userLayout'});
         }
         else {
             res.redirect('back');
@@ -43,6 +43,19 @@ module.exports.view = (req, res) => {
 
 module.exports.update = (req, res) => {
     test.findOneAndUpdate({'title': req.params.title}, req.body, {new: true}, (err, test) => {
+        if (!err) {
+            req.flash('message', "Updated Successfully!");
+            res.redirect('back');
+        }
+        else {
+            req.flash('message', "Updated Failed!");
+            res.redirect('back');
+        }
+    });
+};
+
+module.exports.close = (req, res) => {
+    test.findOneAndUpdate({title: req.params.title}, {status: 'completed'}, {new: true}, (err, test) => {
         if (!err) {
             req.flash('message', "Updated Successfully!");
             res.redirect('back');
