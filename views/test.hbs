@@ -162,7 +162,7 @@
                         alert.id = 'alert'
                         alert.innerHTML = "Test Closed";
                         document.body.insertBefore(alert, document.body.firstChild);
-                        let alerttime = setTimeout(redirect, 3000);
+                        let alerttime = setTimeout(redirect, 5000);
                         c = 0;
 
                     }
@@ -170,9 +170,9 @@
             };
         };
         function redirect() {
+            document.querySelector("#myForm").submit();
             window.location.href = "/student";
         }
-
         const poller = poll();
         poller.start();
 
@@ -199,7 +199,7 @@
             }
             second = second < 10 ? "0" + second : second;
             minutes = minutes < 10 ? "0" + minutes : minutes;
-            minutes < 05 ? display.style.color = "red" : display.style.color = "green";
+            minutes < 05 ? display.style.color = "red" : display.style.color = "white";
             display.innerHTML = `${minutes}: ${second}`
             fulltime--;
         }
