@@ -1,3 +1,3 @@
 # HackIt
 ## Before running the project, Run this command:
-npm install
+npm i

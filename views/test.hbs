@@ -94,14 +94,14 @@
             </div>
             <div class="form-actions">
                 <button class="btn" type="button" name="compile" id="compile">Compile</button>
-                <button class="btn" type="submit">Submit</button>
+                <button class="btn" type="submit" id="endtest"> Submit</button>
             </div>
         </form>
         <textarea id="main" readonly></textarea>
     </div>
     <div class="topnav">
         <a href="/student/{{title}}?page={{math pages '-' 1}}">Prev</a>
-        <a href="/student/{{title}}?page={{math pages '+' 1}}">Next</a>
+        <a href="/student/{{title}}?page={{math pages '+' 1}}" id="next">Next</a>
         <h3 class="float-xl-right float-lg-right float-md-right" id="clock"></h3>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
@@ -115,6 +115,7 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
     <script>
+
         window.onload = prepareTheme('Java Program');
         var editor;
         function prepareTheme(defaultCodeText) {
@@ -129,17 +130,39 @@
         }
     </script>
     <script>
-        let time = localStorage.getItem("Time");
-        let newtime = 10000 * time;
-        console.log(newtime);
-        let min = time;
+        let fulltime;
+        var updatetime;
 
         var decodedJson = decodeURIComponent("{{{dur}}}");
         var minutes = JSON.parse(decodedJson);
-        let fulltime = 60 * minutes;
+        let Test_time = 60 * minutes;
+        localStorage.setItem("Time", Test_time);
+        if (localStorage.getItem("UpdateTime") == null) {
+            fulltime = localStorage.getItem("Time");
+        }
+        else {
+            fulltime = localStorage.getItem("UpdateTime");
+        }
         const display = document.getElementById('clock');
         //var control = setInterval(updatetime, 1000);
 
+        document.querySelector("#next").addEventListener("click", next);
+        function next() {
+            let updateT = document.getElementById('clock').innerHTML;
+            let update_min = updateT.split(":")[0];
+            let update_sec = updateT.split(":")[1];
+            let update_time = (update_min * 60) + parseInt(update_sec);
+            //console.log(update_min + "" + update_sec);
+            updatetime = fulltime;
+            localStorage.setItem("UpdateTime", updatetime);
+            console.log(fulltime);
+            //console.log(update_time);
+        }
+        document.querySelector("#endtest").addEventListener("click", endtest);
+        function endtest() {
+            localStorage.removeItem("UpdateTime");
+            localStorage.removeItem("Time");
+        }
         let c = 0;
         let _poller = null;
 
