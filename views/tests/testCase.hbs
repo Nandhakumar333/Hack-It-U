@@ -1,24 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
+        integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <title>Add Test Case</title>
+    <style>
+        .left-question {
+            width: 700px;
+            height: 700px;
+        }
+
+        @media only screen and (min-width:300px) and (max-width:600px) {
+            .left-question {
+                width: 300px;
+                height: 300px;
+            }
+        }
+
+        @media only screen and (min-width:600px) and (max-width:900px) {
+            .left-question {
+                width: 400px;
+                height: 400px;
+            }
+        }
+
+        @media only screen and (min-width:900px) and (max-width:1200px) {
+            .left-question {
+                width: 900px;
+                height: 400px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div style="left: 0; height: 80%; width: 50%; top: 10%; padding-top: 20px; z-index: 1; overflow-x: hidden;">
-        <iframe src="{{fileurl}}#toolbar=0" frameborder="0" scrolling="yes"                           
-            style="overflow: hidden; height: 100%;" height="100%" width="100%"
-            align="left"></iframe>
+    <div class="container-fluid dynamic">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 mx-0">
+                <div style="left: 0;top: 10%; padding-top: 20px; z-index: 1; ">
+                    <iframe src="{{fileurl}}#toolbar=0" frameborder="0" class="left-question" align="left"></iframe>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 border border-left">
+                <div style="top: 10%; padding-top: 20px; z-index: 1; overflow-x: hidden;">
+                    <div class="text-center"> <button class="btn-primary btn mt-2"
+                            onclick="window.location.href='/faculty/newCase'">Add
+                            New
+                            Test
+                            Case</button></div>
+
+                    {{#each testcase}}
+                    <h3>{{this.name}}</h3>
+                    <button class="btn-info btn mt-2"
+                        onclick="window.location.href='/faculty/viewCase/{{this._id}}'">View</button>
+                    <button class="btn-danger btn mt-2"
+                        onclick="window.location.href='/faculty/delCase/{{this._id}}'">Delete</button>
+                    {{/each}}
+                    <br><br>
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <div style="right: 0; height: 80%; width: 50%; top: 10%; padding-top: 20px; z-index: 1; overflow-x: hidden;">
-        {{#each testcase}}
-        <h3>{{this.name}}</h3>
-        <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/viewCase/{{this._id}}'">View</button>
-        <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/delCase/{{this._id}}'">Delete</button>
-        {{/each}}
-        <br><br>
-        <button class="btn-primary btn mt-2" onclick="window.location.href='/faculty/newCase'">Add New Test Case</button>
-    </div>
+
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
+        integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let width = document.querySelector(".dynamic");
+        console.log(width.offsetWidth);
+        let leftiframw = document.querySelector(".left-question").style.setProperty('--cal-width', width.offsetWidth + 'px')
+    </script>
+
 </body>
+
 </html>
