@@ -57,3 +57,25 @@ module.exports.update = (req, res) => {
         }
     });
 };
+
+module.exports.updatePwd = (req, res) => {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt,(err, hash) => {
+            let hashP = hash;
+            User.findOneAndUpdate({ _id: req.body._id }, {password: hashP}, (err, doc) => {
+                if (!err) { 
+                    req.flash('message', "Password Updated!");
+                    res.redirect(`/${doc.role}/profile`); 
+                }
+                else {
+                    if (err.name == 'ValidationError') {
+                        handleValidationError(err, req.body);
+                        res.redirect('Back');
+                    }
+                    else
+                        console.log('Error during record update : ' + err);
+                }
+            });
+        });
+    });
+}

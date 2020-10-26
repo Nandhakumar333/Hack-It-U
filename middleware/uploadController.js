@@ -68,7 +68,7 @@ module.exports.loadHome = (req, res) => {
     collection.find({'filename': {$regex: `^${Title}_`}}).toArray((err, files) => {
       // Check if files
       if (!files || files.length === 0) {
-        res.render('tests/testCreate.hbs', { title: Title, files: false, message: "Upload Files", layout: 'upload.hbs' });
+        res.render('tests/testCreate.hbs', { title: Title, username: req.user.fullName, files: false, message: "Upload Files", layout: 'upload.hbs' });
       } else {
         files.map(file => {
           if (
@@ -80,7 +80,7 @@ module.exports.loadHome = (req, res) => {
             file.isImage = false;
           }
         });
-        res.render('tests/testCreate.hbs', { title: Title, message: "Upload Files", files: files, layout: 'upload.hbs'});
+        res.render('tests/testCreate.hbs', { title: Title, message: "Upload Files", username: req.user.fullName, files: files, layout: 'upload.hbs'});
       }
     });
   });
@@ -101,25 +101,11 @@ module.exports.uploadFile = async (req, res) => {
   });
 };
 
-module.exports.testAvail = async (req, res, next) => {
-  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
-
-    if(err){
-        return res.render('tests/staffTest.hbs',{title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
-    }
-
-    test.find().exec((err, docs) => {
-      // Check if files
-      res.render('tests/staffTest.hbs', {status: "Faculty", message: "Tests Created", tests: docs, layout: 'testAvail'});
-    });
-  });
-};
-
 module.exports.viewTest = (req, res) => {
   Title = req.params.title;
   MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
     if(err){
-        return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
+        return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', username: req.user.fullName, error: err.errMsg, layout: false});
     }
     const db = client.db(dbName);
     
@@ -129,7 +115,7 @@ module.exports.viewTest = (req, res) => {
     collection.find({'filename': {$regex: `^${Title}_`}}).toArray((err, files) => {
       // Check if files
       if (!files || files.length === 0) {
-        res.render('layouts/upload.hbs', { title: Title, files: false, message: "Upload Questions", layout: false });
+        res.render('layouts/upload.hbs', { title: Title, files: false, username: req.user.fullName, message: "Upload Questions", layout: false });
       } else {
         files.map(file => {
           if (
@@ -141,7 +127,7 @@ module.exports.viewTest = (req, res) => {
             file.isImage = false;
           }
         });
-        res.render('layouts/upload.hbs', { title: Title, message: "Upload Questions", files: files, layout: false});
+        res.render('layouts/upload.hbs', { title: Title, message: "Upload Questions", username: req.user.fullName, files: files, layout: false});
       }
     });
   });
@@ -150,7 +136,7 @@ module.exports.viewTest = (req, res) => {
 module.exports.delete = (req, res) => {
   MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
     if(err){
-      return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
+      return res.render('layouts/upload.hbs', {title: Title, message: 'MongoClient Connection error', username: req.user.fullName, error: err.errMsg, layout: false});
     }
 
     gfs.delete(new mongoose.Types.ObjectId(req.params._id), (err, data) => {
@@ -166,7 +152,7 @@ module.exports.testcase = (req, res) => {
   MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
 
     if(err){
-        return res.render('layouts/upload.hbs', {title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
+        return res.render('tests/testCase.hbs', {title: 'View Test Cases', message: 'MongoClient Connection error', username: req.user.fullName, error: err.errMsg});
     }
     const db = client.db(dbName);
     
@@ -178,19 +164,19 @@ module.exports.testcase = (req, res) => {
       req.app.set('q_id', req.params._id)
       collection.find({'_id': id}).toArray(function(err, docs){
         if(err){
-          return res.render('tests/testCase.hbs', {title: 'File error', message: 'Error finding file', error: err.errMsg, layout: false});
+          return res.render('tests/testCase.hbs', {title: 'File error', username: req.user.fullName, message: 'Error finding file', error: err.errMsg, layout: false});
         }
         if(!docs || docs.length === 0){
-          return res.render('tests/testCase.hbs', {title: 'Download Error', message: 'No file found', layout: false});
+          return res.render('tests/testCase.hbs', {title: 'Download Error', username: req.user.fullName, message: 'No file found', layout: false});
         }else{
         //Retrieving the chunks from the db
           collectionChunks.find({files_id : docs[0]._id}).sort({n: 1}).toArray(function(err, chunks){
               if(err){
-              return res.render('tests/testCase.hbs', {title: 'Download Error', message: 'Error retrieving chunks', error: err.errmsg, layout: false});
+              return res.render('tests/testCase.hbs', {title: 'Download Error', username: req.user.fullName, message: 'Error retrieving chunks', error: err.errmsg, layout: false});
               }
               if(!chunks || chunks.length === 0){
               //No data found
-              return res.render('tests/testCase.hbs', {title: 'Download Error', message: 'No data found', layout: false});
+              return res.render('tests/testCase.hbs', {title: 'View Test Cases', username: req.user.fullName, message: 'No data found', layout: false});
               }
               //Append Chunks
               let fileData = [];
@@ -203,7 +189,7 @@ module.exports.testcase = (req, res) => {
               let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
               
               testcase.find({questionid: docs[0]._id}).exec((err, tests) => {
-                res.render('tests/testCase.hbs', {fileurl: finalFile, testcase: tests, layout: false});
+                res.render('tests/testCase.hbs', {title: 'View Test Cases', username: req.user.fullName, fileurl: finalFile, testcase: tests, layout: false});
               });
           });
         } 

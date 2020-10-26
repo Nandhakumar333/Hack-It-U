@@ -21,7 +21,7 @@ module.exports.create = (req, res) => {
 module.exports.view = (req, res) => {
     testcase.findById(req.params._id, (err, doc) =>{
         if (!err) {
-            res.render('tests/updateCase.hbs', {tCase: doc, layout: false});
+            res.render('tests/updateCase.hbs', {title: "Update Test Case", username: req.user.fullName, tCase: doc});
         }
         else {
             console.log(err);

@@ -1,0 +1,59 @@
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/student">Home</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item active"
+                    style="background-color: rgb(0, 51, 102);"
+                    id="student-nav">
+                    <a class="nav-link text-white"
+                        style="font-size: 23px;"
+                        href="/student/profile">
+                        Profile
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="container-fluid col-sm-8" id="view">
+        <h3>{{viewTitle}}<br></h3>
+        <form action="/student/updatePwd" method="POST" autocomplete="off">
+
+            <input type="hidden" name="_id" value="{{user._id}}">
+            <div class="form-group row">
+                <label for="email" class="col-12 col-md-2 col-form-label">Email</label>
+            </div>
+                <div class="col-12 offset-md-1/2 col-md-4">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" value="{{user.email}}" readonly>
+                </div>
+            <div class="form-group row">
+                <label for="password" class="col-12 col-md-2 col-form-label">Password</label>
+            </div>
+
+            <div class=" form-group row">
+                <div class="col-12 offset-md-1/2 col-md-4">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-4">
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-layer-group"></i>  Submit</button>
+                    <a href='/admin/cancel' class="btn btn-secondary btn-sm"><i class="far fa-list-alt"></i>    Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

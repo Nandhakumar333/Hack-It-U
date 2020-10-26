@@ -8,3 +8,4 @@ mongoose.connect('mongodb+srv://mongo:mongo@cluster0-4zn27.mongodb.net/test?retr
 require('./User');
 require('./TestCase');
 require('./Form');
+require('./Tests');
