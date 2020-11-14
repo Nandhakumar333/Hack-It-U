@@ -35,9 +35,6 @@ storage.on('connection', (db) => {
 module.exports.getResults = async (req, res, next) => {
     let Title;
     let questions;
-    
-    let role = req.user.role;
-
     test.findOne({'title': `${req.params.title}`}).exec((err, docs) => {
       Title = docs.title;
       questions = docs.question;
@@ -46,7 +43,7 @@ module.exports.getResults = async (req, res, next) => {
     MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
   
     if(err){
-        return res.render('result.hbs', {title: Title, message: 'MongoClient Connection error', layout: false});
+        return res.render('result.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
     }
     const db = client.db(dbName);
     
@@ -63,24 +60,15 @@ module.exports.getResults = async (req, res, next) => {
     try {
       collection.find({'filename': {$regex: `^${Title}_Q`}}).limit(limit).skip(startIndex).toArray(function(err, docs){
         if(err){
-          if (role === 'student')
-            return res.render('results/student.hbs', {title: Title, message: 'No File Found', layout: 'result'});
-          else
-            return res.render('results/faculty.hbs', {title: Title, message: 'No File Found', layout: 'result'});
+          return res.render('result.hbs', {title: Title, message: 'Error finding file', error: err.errMsg, layout: false});
         }
         if(!docs || docs.length === 0){
-          if (role === 'student')
-            return res.render('results/student.hbs', {title: Title, message: 'Error retrieving chunks', layout: 'result'});
-          else
-            return res.render('results/faculty.hbs', {title: Title, message: 'Error retrieving chunks', layout: 'result'});
+          return res.render('result.hbs', {title: Title, message: 'No file found', layout: false});
         }else{
         //Retrieving the chunks from the db
           collectionChunks.find({files_id : docs[0]._id}).sort({n: 1}).toArray(function(err, chunks){
             if(err){
-              if (role === 'student')
-                return res.render('results/student.hbs', {title: Title, message: 'Error retrieving chunks', error: err.errmsg, layout: 'result'});
-              else
-                return res.render('results/faculty.hbs', {title: Title, message: 'Error retrieving chunks', error: err.errmsg, layout: 'result'});
+              return res.render('result.hbs', {title: Title, message: 'Error retrieving chunks', error: err.errmsg, layout: false});
             }
             if(!chunks || chunks.length === 0){
               //No data found
@@ -97,6 +85,7 @@ module.exports.getResults = async (req, res, next) => {
             let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
             
             let Sname = req.params.name || req.user.fullName;
+            let role = req.user.role;
 
             var query = { name: Sname, questionid: docs[0]._id };
             col.findOne(query, (err, docr) => {
@@ -131,7 +120,7 @@ module.exports.total = (req, res) => {
     let Title = req.params.title;
     MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
       if(err){
-        return res.render('resultF.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
+        return res.render('result.hbs', {title: Title, message: 'MongoClient Connection error', error: err.errMsg, layout: false});
       }
       const db = client.db(dbName);
       const col = db.collection(Title);

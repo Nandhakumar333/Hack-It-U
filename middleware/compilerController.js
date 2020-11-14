@@ -14,7 +14,6 @@ module.exports = {
             let passed = 0;
             req.app.set('language', selected_language);
             req.app.set('code', req.body.codeArea);
-            req.app.set('total', testcases.length);
 
             if (selected_language === "Java") {
                 let javaCode = req.body.codeArea;
@@ -112,7 +111,7 @@ module.exports = {
     }
 };
 
-module.exports.check = (req, res, next) => {
+module.exports.check = (req, res) => {
     testcase.find({questionid: req.app.get('qid'), sample: 'true'}).exec(async (err, testcases) => {
         console.log(testcases);
         let selected_language = req.body.language;
@@ -146,16 +145,17 @@ module.exports.check = (req, res, next) => {
 
         else if (selected_language === "Python") {
             const sourcecode = req.body.codeArea;
-
+            console.log(sourcecode);
             fs.writeFile('Main.py', sourcecode, function (err) {
                 if (err) throw err;
                 console.log('Saved!');
             });
-            
             for(let doc of testcases) {
-                await python.runFile('Main.py', { stdin: doc.input}, (err, result) => {
+                await python.runFile('Main.py', { stdin: doc.input}, (err, result) => { 
+                    console.log("Success");
                     var out = (result['stdout']).replace(/(?:\\[rn]|[\r\n]+)$/, '');
                     var expec = (doc.expected).replace(/(?:\\[rn]|[\r\n]+)$/, '');
+                    console.log("Success");
                     if(out == expec) {
                         passed++;
                     }
@@ -163,7 +163,6 @@ module.exports.check = (req, res, next) => {
                     obt[i] = {'output': out}
                     i++;
                 });
-                console.log(exp, obt);
             }
             console.log(exp, obt);
             res.send({exp, obt, passed})

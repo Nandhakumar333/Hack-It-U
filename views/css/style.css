@@ -207,7 +207,6 @@ table,
 td,
 th {
   border: 2px solid #003366;
-  border-radius: 50px;
 }
 #table-div {
   border: 2px solid #003366;
@@ -354,34 +353,33 @@ th {
 
 /* TEACHER UI*/
 #view {
-    flex: 1;
-    border-radius: 25px;
-    margin-top: 15px;
-    right: 40px;
-    border: 2px solid grey;
-    padding: 25px 25px 25px 25px;
+  flex: 1;
+  border-radius: 25px;
+  margin-top: 15px;
+  right: 40px;
+  border: 2px solid grey;
+  padding: 25px 25px 25px 25px;
 }
 #view_results {
-    flex: 1;
-    padding: 25px 0px 25px 50px;
+  flex: 1;
+  padding: 25px 0px 25px 50px;
 }
 
 #Live {
-    border-radius: 25px;
-    border: 1px solid grey;
+  border-radius: 25px;
+  border: 1px solid grey;
 }
 
 #View_Live {
-    flex: 1;
-    border-radius: 25px;
-    border: 1px solid grey;
-    padding: 0px 25px 0px 25px;
+  flex: 1;
+  border-radius: 25px;
+  border: 1px solid grey;
+  padding: 0px 25px 0px 25px;
 }
 
-
 #SResults {
-    flex: 1;
-    border-radius: 25px;
-    border: 1px solid grey;
-    padding: 0px 25px 0px 400px;
+  flex: 1;
+  border-radius: 25px;
+  border: 1px solid grey;
+  padding: 0px 25px 0px 400px;
 }

@@ -1,5 +1,4 @@
 require('../models/Form');
-require('../models/User');
 
 const express = require('express');
 const path = require('path');
@@ -52,43 +51,24 @@ app.get('/', ensureAuthenticated, (req, res) => {
 
 app.get('/profile', ensureAuthenticated, (req, res) => {
     User.find({email: req.user.email}, (err, docs) => {
-        res.render('faculty/profile.hbs', {title: req.user.role, username: req.user.fullName, user: docs[0], message: req.flash('message')});
+        res.render('faculty/profile.hbs', {username: req.user.fullName, user: docs[0], message: req.flash('message')});
     });
 });
+
+app.get('/newCase', (req, res) => {
+    let qid = req.app.get('q_id');
+    res.render('tests/addCase.hbs', {qid: qid, layout: false});
+})
 
 //User
 var sf = require('../middleware/sfController');
 app.post('/profile/update', ensureAuthenticated, sf.update);
 
-app.get('/profile/updatePwd', ensureAuthenticated, (req, res) => {
-    User.findById(req.user.id, (err, doc) => {
-        if (!err) {
-            res.render("faculty/editpwd", {
-                title: req.user.role,
-                viewTitle: "Update Password",
-                user: doc
-            });
-        }   
-    }); 
+app.get('/createTest', ensureAuthenticated, (req, res) => {
+    User.find({email: req.user.email}, (err,docs) => {
+        res.render('faculty/createTest.hbs', {user: docs[0]});
+    });
 });
-
-app.post('/updatePwd', ensureAuthenticated, sf.updatePwd);
-
-//TestCase
-app.get('/newCase', (req, res) => {
-    let qid = req.app.get('q_id');
-    res.render('tests/addCase.hbs', {title: "Add Test Case", username: req.user.fullName, qid: qid});
-});
-
-var testCase = require('../middleware/testCaseController');
-
-app.post('/addCase', testCase.create);
-
-app.post('/updateCase', testCase.update);
-
-app.get('/viewCase/:_id', testCase.view);
-
-app.get('/delCase/:_id', testCase.delete);
 
 //Results
 var results = require('../middleware/resultsController');
@@ -98,14 +78,12 @@ app.get('/:title/viewResults', results.total);
 app.get('/:title/viewResults/:name', results.getResults);
 
 //Tests
-app.get('/createTest', ensureAuthenticated, (req, res) => {
-    res.render('faculty/createTest.hbs', {title: "Create Test", username: req.user.fullName});
-});
-
 var form = require('../middleware/testFController');
 app.post('/create', ensureAuthenticated, form.create);
 
-app.post('/:title/created', form.setStatus);
+app.post('/created', (req, res) => {
+    res.redirect('/faculty');
+});
 
 app.post('/:title/update', ensureAuthenticated, form.update);
 
@@ -118,6 +96,8 @@ app.post('/:title/cancel', ensureAuthenticated, form.delete);
 //File Uploads
 var uploads = require('../middleware/uploadController');
 
+app.get('/viewTest', ensureAuthenticated, uploads.testAvail);
+
 app.get('/:title', ensureAuthenticated, uploads.loadHome);
 
 app.post('/uploadTest/upload', ensureAuthenticated, uploads.uploadFile);
@@ -127,5 +107,16 @@ app.get('/:title/viewFiles', ensureAuthenticated, uploads.viewTest);
 app.post('/del/:_id', ensureAuthenticated, uploads.delete);
 
 app.get('/view/:_id', ensureAuthenticated, uploads.testcase);
+
+//TestCase
+var testCase = require('../middleware/testCaseController');
+
+app.post('/addCase', testCase.create);
+
+app.post('/updateCase', testCase.update);
+
+app.get('/viewCase/:_id', testCase.view);
+
+app.get('/delCase/:_id', testCase.delete);
 
 module.exports = app;

@@ -1,11 +1,7 @@
-require('../models/Form');
-require('../models/Tests');
-require('../models/User');
+require('../routes/faculty');
 
 const mongoose = require('mongoose');
 const test = mongoose.model('Testdetail');
-const testR = mongoose.model('TestResult');
-const User = mongoose.model('Users');
 
 module.exports.create = (req,res) => {
     var c = new test();
@@ -68,22 +64,5 @@ module.exports.close = (req, res) => {
             req.flash('message', "Updated Failed!");
             res.redirect('back');
         }
-    });
-};
-
-module.exports.setStatus = (req, res) => {
-    User.find({role: 'student'}, (err, docs) => {
-        if (err) throw err;
-        for (let user of docs) {
-            var r = new testR();
-            r.user = user.fullName;
-            r.test = req.params.title;
-            r.attempted = false;
-            r.save((err, doc) => {
-                if (err) throw err;
-                console.log(doc);
-            });
-        }
-        res.redirect('/faculty');
     });
 };

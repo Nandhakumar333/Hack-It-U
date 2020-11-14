@@ -56,13 +56,11 @@
                             </table>
                         </div>
                         {{#ifCond this.status 'active'}}
-                            {{#if this.attempted}}
-                                <button type="submit" class="btn btn-dark btn-sm" onclick="window.location.href='/student/{{this.title}}?page=1'" id="Take{{@index}}" disabled><i class="far fa-list-alt"></i> Take Test</button>
-                            {{else}}
-                                <button type="submit" class="btn btn-success btn-sm" onclick="window.location.href='/student/{{this.title}}?page=1'" id="Take{{@index}}"><i class="far fa-list-alt"></i> Take Test</button>
-                            {{/if}}
+                        <a href="/student/{{this.title}}?page=1" id="Take{{@index}}"
+                            class="btn btn-outline-success">Take Test</a>
                         {{else}}
-                            <button type="submit" class="btn btn-success btn-sm" onclick="window.location.href='/student/{{this.title}}/results?page=1'" id="Done{{@index}}"><i class="far fa-list-alt"></i> View Results</button>
+                        <a href="/student/{{this.title}}/results?page=1" id="Done{{@index}}"
+                            class="btn btn-outline-success">View Results</a>
                         {{/ifCond}}
                     </div>
                 </div>
@@ -71,8 +69,36 @@
         </div>
     </div>
 </div>
-<script
-    src="https://code.jquery.com/jquery-2.0.3.min.js"
-    integrity="sha256-sTy1mJ4I/LAjFCCdEB4RAvPSmRCb3CU7YqodohyeOLo="
-    crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-2.0.3.min.js"
+    integrity="sha256-sTy1mJ4I/LAjFCCdEB4RAvPSmRCb3CU7YqodohyeOLo=" crossorigin="anonymous">
+    </script>
+<script src="../js/setObj.js"></script>
+<script>
+    let val = localStorage.getItem("User");
+    /*var cookieArr = document.cookie.split(";");
+    cookieArr.forEach((item) => {
+        console.log(item.split("="));
+        console.log(item.split("=")[1].split(",")[0].split(":")[1]);
+    })*/
+    if (val) {
+        let data = JSON.parse(val);
+        if (data.Taken) {
+            console.log(data['Id']);
+            $(`#${data['Id']}`).css('background-color', 'grey');
+            document.querySelector(`#${data['Id']}`).removeAttribute("href");
+        } else {
+            console.log("Not Taken");
+        }
+    } else {
+        console.log("Not Taken");
+    }
+    /*document.querySelector("#Take").addEventListener("click", taken);
+    function taken() {
+        var obj = {
+            user: "Nandha",
+            Taken: "true",
+        };
+        document.cookie = `User=${JSON.stringify(obj)}; max - age=1000`;
+        localStorage.setItem("User", JSON.stringify(obj));
+    }*/
 </script>
