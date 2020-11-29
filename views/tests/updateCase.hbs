@@ -1,29 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{tCase.name}}</title>
-</head>
-<body onload='document.getElementById("sample").checked = {{tCase.sample}};'>
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/faculty">Home</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/profile"
+                        id="teacher-nav"
+                        >Profile</a>
+                </li>
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/createTest"
+                        id="teacher-nav"
+                        >Create Test</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class="offset-md-1 col-12 col-md-9" id="view">
     <form action="/faculty/updateCase" method="POST">
-        <input type="hidden" name="_id" value="{{tCase._id}}">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" value="{{tCase.name}}" required><br><br>
-        <label for="name">Question Id:</label><br>
-        <input type="text" id="questionid" name="questionid" required value="{{tCase.questionid}}" readonly><br><br>
-        <label for="sample">Sample Case?</label><br>
-        <input type="radio" id="sample" name="sample" value="true" checked="{{tCase.sample}}">
-        <label for="sample">Yes</label><br>
-        <input type="radio" id="sample" name="sample" value="false" checked="{{tCase.sample}}">
-        <label for="sample">No</label><br><br>
-        <label for="input">Input:</label><br>
-        <textarea id="input" name="input" rows="4" cols="50">{{tCase.input}}</textarea><br><br>
-        <label for="input">Expected output:</label><br>
-        <textarea id="expected" name="expected" rows="4" cols="50">{{tCase.expected}}</textarea><br><br>
-        <label for="score">Score:</label><br>
-        <input type="number" id="score" name="score" value="{{tCase.score}}" required><br><br>
-        <input type="submit" value="Submit">
+        <input type="hidden" name="_id">
+
+        <div class="form-group row">
+                <label class="col-md-2 col-form-label" for="name">Name</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" value="{{tCase.name}}" required>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="questionid">Question ID</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="text" class="form-control" id="questionid" name="questionid" value="{{tCase.questionid}}" readonly>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="sample">Sample Case?</label>
+                </div>
+                <div class="col-md-6 row">
+                    <div class="col-12 col-md-2">
+                        <input type="radio" class="form-check-input" id="sample1" name="sample" value="true">
+                        <label for="sample" class="form-check-label">Yes</label>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <input type="radio" class="form-check-input" id="sample2" name="sample" value="false">
+                        <label for="sample" class="form-check-label">No</label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="input">Input:</label>
+                </div>
+                <div class="col-md-6 row">
+                    <textarea class="form-control" id="input" name="input" rows="4" cols="50">{{tCase.input}}</textarea>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="expected">Expected Output:</label>
+                </div>
+                <div class="col-md-6 row">
+                    <textarea class="form-control" id="expected" name="expected" rows="4" cols="50" required>{{tCase.expected}}</textarea>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="score">Score</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="number" class="form-control" id="score" name="score" placeholder="Score" value="{{tCase.score}}" required>
+                </div>
+
+                <br>
+
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-success btn-sm"><i class="far fa-list-alt"></i> Update</button>
+                    </div>
+                </div>
     </form>
-</body>
-</html>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var decodedJson = decodeURIComponent("{{{tCase.sample}}}");
+        var value = JSON.parse(decodedJson);
+        var $radio = $('input:radio[name=sample]');
+        if (value)
+            $radio.filter('[value=true]').attr('checked', true);
+        else
+            $radio.filter('[value=false]').attr('checked', true);
+    });
+</script>

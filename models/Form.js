@@ -25,7 +25,10 @@ var formSchema = new mongoose.Schema({
     marks: {
         type: Number,
         required: 'This field is required.'
+    },
+    attempted: {
+        type: Boolean
     }
 });
 
-module.exports = test = mongoose.model('Testdetail',formSchema);
+module.exports = test = mongoose.model('Testdetail', formSchema);

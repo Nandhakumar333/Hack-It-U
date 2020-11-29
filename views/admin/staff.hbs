@@ -24,7 +24,7 @@
             <a
             class="nav-link text-white"
             style="font-size: 25px;"
-            href="faculty"
+            href="/admin/faculty"
             >Faculty<span class="sr-only">(current)</span></a
             >
         </li>
@@ -32,7 +32,7 @@
             <a
             class="nav-link"
             style="font-size: 25px;"
-            href="student"
+            href="/admin/student"
             id="teacher-nav"
             >Student</a
             >
@@ -60,8 +60,8 @@
                         <td><button type="submit" class="btn btn-outline-warning btn-sm" onclick="window.location.href='/admin/{{this._id}}'">
                           Update <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                         </button></td>
-                        <td><button type="submit" class="btn btn-outline-danger btn-sm" onclick="window.location.href='/admin/delete/{{this._id}}'">
-                          Delete <i class="fa fa-trash" aria-hidden="true"></i>
+                        <td><button type="submit" class="btn btn-outline-primary btn-sm" onclick="window.location.href='/admin/pwd/{{this.id}}'">
+                        Reset Password <i class="fa fa-chevron-right"></i>
                         </button></td>
                     </tr>
                     <tr>
@@ -70,6 +70,9 @@
                     <td colspan="2">
                         <button type="submit" class="btn btn-outline-primary btn-sm" onclick="window.location.href='/admin/view/{{this._id}}'">
                         View <i class="fa fa-chevron-right"></i>
+                        </button>
+                        <button type="submit" class="btn btn-outline-danger btn-sm" onclick="window.location.href='/admin/delete/{{this._id}}'">
+                          Delete <i class="fa fa-trash" aria-hidden="true"></i>
                         </button>
                     </td>
                     </tr>

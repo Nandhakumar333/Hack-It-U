@@ -1,4 +1,5 @@
 require('../models/Form');
+require('../models/Tests');
 
 const MongoClient = require('mongodb');
 const multer = require('multer');
@@ -9,6 +10,7 @@ const url = "mongodb+srv://mongo:mongo@cluster0-4zn27.mongodb.net/test?retryWrit
 const dbName = "test";
 
 const test= mongoose.model('Testdetail');
+const testR = mongoose.model('TestResult');
 
 let storage = new GridFsStorage({
   url: url,
@@ -30,12 +32,50 @@ storage.on('connection', (db) => {
   
 });
 
-module.exports.paginatedResults = async (req, res, next) => {
+module.exports = {
+  ensureAttempted : (req, res, next) => {
+    testR.findOne({user: req.user.fullName, test: req.params.title}, (err, doc) => {
+      if (err) throw err;
+      if (doc.attempted == false)
+        return next();
+      else
+        res.redirect('/student');
+    });
+  },
+
+  checkUser : (req, res, next) => {
+    test.find((err, tests) => {
+      if (err) throw err;
+      for (let check of tests) {
+        testR.findOne({user: req.user.fullName, test: check.title}, (err, doc) => {
+          if (doc !== null) {
+            console.log('Already set!');
+          }
+          else {
+              var r = new testR();
+              r.user = req.user.fullName;
+              r.test = check.title;
+              r.attempted = false;
+              r.save((err, doc) => {
+                  if (err) throw err;
+              }); 
+          }
+        });
+      }
+    });
+    return next();
+  }
+};
+
+module.exports.paginatedResults = async (req, res) => {
   let Title = req.params.title;
   let questions, timer;
   test.findOne({'title': `${req.params.title}`}).exec((err, docs) => {
-    questions = docs.question;
-    timer = docs.duration;
+    if (docs !== null)
+    {
+      questions = docs.question;
+      timer = docs.duration;
+    }
   });
   
   MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
@@ -51,10 +91,8 @@ module.exports.paginatedResults = async (req, res, next) => {
   const page = parseInt(req.query.page)
   const limit = 1
 
-
   const startIndex = (page - 1) * limit;
   const endIndex = page * limit;
-  console.log(endIndex);
   req.app.set('Title', Title);
 
   if(page !== req.app.get('curpage')) {
@@ -94,26 +132,12 @@ module.exports.paginatedResults = async (req, res, next) => {
           let finalFile = 'data:' + docs[0].contentType + ';base64,' + fileData.join('');
           req.app.set('qid', docs[0]._id);
           req.app.set('curpage', page);
-          res.render('test.hbs', {title: Title, fileurl: finalFile, pages: page, dur: encodeURIComponent(JSON.stringify(timer)), layout: false});
+          res.render('test.hbs', {title: Title, fileurl: finalFile, pages: page, total: questions, dur: encodeURIComponent(JSON.stringify(timer)), layout: false});
         });
       } 
     });
     } catch (e) {
       res.status(500).json({ message: e.message })
     }
-  });
-};
-
-module.exports.testAvail = async (req, res, next) => {
-  MongoClient.connect(url, {useUnifiedTopology: true, useNewUrlParser: true}, function(err, client){
-
-    if(err){
-        return res.render('tests/studentTest.hbs', {title: 'Uploaded Error', message: 'MongoClient Connection error', error: err.errMsg, layout: false});
-    }
-
-    test.find({'status': 'active'}).exec((err, docs) => {
-      // Check if files
-      res.render('tests/studentTest.hbs', {status: "Student", message: "Tests Available", tests: docs, cond: true, layout: 'testAvail.hbs'});
-    });
   });
 };

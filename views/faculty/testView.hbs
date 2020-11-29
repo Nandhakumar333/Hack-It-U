@@ -13,13 +13,6 @@
         <br /><br />
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav flex-column">
-                <li class="nav-item"
-                    id="Test-nav">
-                    <a class="nav-link"
-                        style="font-size: 23px;"
-                        id="teacher-nav"
-                        href="#">Test Results</a>
-                </li>
                 <li class="nav-item mt-md-2">
                     <a class="nav-link"
                         style="font-size: 23px;"
@@ -100,9 +93,8 @@
 
         <div class="form-group row">
             <div class="col-sm-4">
-                <i class="fa fa-file" aria-hidden="true"></i>
                 <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='/faculty/{{form.title}}/viewFiles'">
-
+                    <i class="fa fa-file" aria-hidden="true"></i>
                     View File
                 </button>
                 <button type="submit" class="btn btn-danger btn-sm" onclick="window.location.href='/faculty/{{form.title}}/cancel'">

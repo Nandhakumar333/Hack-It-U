@@ -1,29 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Case</title>
-</head>
-<body>
+<div class="col-sm-2 col-md-2 col-lg-2 col-xl-2">
+    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+        <a class="navbar-brand" style="font-size: 20px;" href="/faculty">Home</a>
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <br /><br />
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav flex-column">
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/profile"
+                        id="teacher-nav"
+                        >Profile</a>
+                </li>
+                <li class="nav-item mt-md-2">
+                    <a class="nav-link"
+                        style="font-size: 23px;"
+                        href="/faculty/createTest"
+                        id="teacher-nav"
+                        >Create Test</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div class=" offset-md-1 col-12 col-md-9" id="view">
     <form action="/faculty/addCase" method="POST">
         <input type="hidden" name="_id">
-        <label for="name">Name:</label><br>
-        <input type="text" id="name" name="name" required><br><br>
-        <label for="name">Question Id:</label><br>
-        <input type="text" id="questionid" name="questionid" value="{{qid}}" required readonly><br><br>
-        <label for="sample">Sample Case?</label>
-        <select name="sample" id="sample">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
-        </select><br>
-        <label for="input">Input:</label><br>
-        <textarea id="input" name="input" rows="4" cols="50"></textarea><br><br>
-        <label for="input">Expected output:</label><br>
-        <textarea id="expected" name="expected" rows="4" cols="50"></textarea><br><br>
-        <label for="score">Score:</label><br>
-        <input type="number" id="score" name="score" required><br><br>
-        <input type="submit" value="Submit">
+
+        <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="name">Name</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="questionid">Question ID</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="text" class="form-control" id="questionid" name="questionid" value="{{qid}}" readonly>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="sample">Sample Case?</label>
+                </div>
+                <div>
+                    <select name="sample" id="sample" class="btn-info">
+                        <option value="true" class="btn-success">Yes</option>
+                        <option value="false" class="btn-danger" selected>No</option>
+                    </select>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="input">Input:</label>
+                </div>
+                <div class="col-md-6 row">
+                    <textarea class="form-control" id="input" name="input" rows="4" cols="50"> </textarea>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="expected">Expected Output:</label>
+                </div>
+                <div class="col-md-6 row">
+                    <textarea class="form-control" id="expected" name="expected" rows="4" cols="50" required> </textarea>
+                </div>
+
+
+                <div class="form-group row">
+                    <label class="col-md-2 col-form-label" for="score">Score</label>
+                </div>
+                <div class="col-md-6 row">
+                    <input type="number" class="form-control" id="score" name="score" placeholder="Score" required>
+                </div>
+
+                <br>
+
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-success btn-sm"><i class="far fa-list-alt"></i> SUBMIT</button>
+                    </div>
+                </div>
     </form>
-</body>
-</html>
+</div>

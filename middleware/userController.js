@@ -13,14 +13,14 @@ var router = express.Router();
 
 // Login Page
 router.get('/home', ensureAuthenticated, (req, res) => {
-    test.find({'status': 'active'}).exec((err, docs) => {
+    test.find().exec((err, docs) => {
         // Check if files
         res.render('admin/home.hbs', {tests: docs});
       });
 });
 
 router.get('/', ensureAuthenticated, (req, res) => {
-    res.render("admin/addOrEdit", {
+    res.render("admin/add", {
         viewTitle: "Add User"
     });
 });
@@ -68,25 +68,19 @@ function insertRecord(req, res) {
 }
 
 function updateRecord(req, res) {
-    bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(req.body.password, salt,(err, hash) => {
-            if (err) throw err;
-            req.body.password = hash;
-            User.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
-                if (!err) { res.redirect('admin/student'); }
-                else {
-                    if (err.name == 'ValidationError') {
-                        handleValidationError(err, req.body);
-                        res.render("admin/addOrEdit", {
-                            viewTitle: 'Update User',
-                            user: req.body
-                        });
-                    }
-                    else
-                        console.log('Error during record update : ' + err);
-                }
-            });
-        });
+    User.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+        if (!err) { res.redirect('admin/student'); }
+        else {
+            if (err.name == 'ValidationError') {
+                handleValidationError(err, req.body);
+                res.render("admin/addOrEdit", {
+                    viewTitle: 'Update User',
+                    user: req.body
+                });
+            }
+            else
+                console.log('Error during record update : ' + err);
+        }
     });
 }
 
@@ -139,12 +133,42 @@ function handleValidationError(err, body) {
 router.get('/:id', ensureAuthenticated, (req, res) => {
     User.findById(req.params.id, (err, doc) => {
         if (!err) {
-            res.render("admin/addOrEdit", {
+            res.render("admin/edit", {
                 viewTitle: "Update User",
                 user: doc
             });
         }
     }); 
+});
+
+router.get('/pwd/:id', ensureAuthenticated, (req, res) => {
+    User.findById(req.params.id, (err, doc) => {
+        if (!err) {
+            res.render("admin/editpwd", {
+                viewTitle: "Update Password",
+                user: doc
+            });
+        }   
+    }); 
+});
+
+router.post('/updatePwd/:id', ensureAuthenticated, (req, res) => {
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(req.body.password, salt,(err, hash) => {
+            let hashP = hash;
+            User.findOneAndUpdate({ _id: req.body._id }, {password: hashP}, (err, doc) => {
+                if (!err) { res.redirect('/admin/student'); }
+                else {
+                    if (err.name == 'ValidationError') {
+                        handleValidationError(err, req.body);
+                        res.redirect('Back');
+                    }
+                    else
+                        console.log('Error during record update : ' + err);
+                }
+            });
+        });
+    });
 });
 
 router.get('/view/:id', ensureAuthenticated, (req, res) => {
